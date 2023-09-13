@@ -5,11 +5,11 @@ export class Paciente{
     private idCliente: number;
     private observacion?: string;
 
-    public constructor(nombre:string,especie:string,idCliente:number,observacion?:string){
+    public constructor(nombre:string,especie:string,observacion?:string){
         this.id = 0;
         this.nombre = nombre;
         this.especie = especie;
-        this.idCliente = idCliente;
+        this.idCliente = 0;
         this.observacion = observacion || "";
     }
     public getId():number{
