@@ -1,6 +1,6 @@
 import { Paciente } from "./Paciente";
 import { Persona}  from "./Persona";
-import * as rls from 'readline-sync';
+
 
 export class Cliente extends Persona{
     private vip: number;
@@ -14,8 +14,8 @@ export class Cliente extends Persona{
     }
 
     
-    public agregarMascota(idCliente:number):void{
-        this.mascotas.push(new Paciente(rls.question("Ingrese nombre de Mascota: ").toUpperCase(),rls.question("Ingrese especie: "),idCliente,rls.question("Ingrese observación: ")));
+    public agregarMascota(nombre:string, especie: string, idCliente:number, observacion?:string):void{
+        this.mascotas.push(new Paciente(nombre,especie,idCliente,observacion));
     }
 
     public getVip():number{
