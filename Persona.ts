@@ -10,6 +10,10 @@ export class Persona {
         this.telefono=tel;
     }
 
+    public getId():number{
+        return this.id;
+    }
+
     public getNombre():string{
         return this.nombre;
     }
