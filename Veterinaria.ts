@@ -55,4 +55,25 @@ export class Veterinaria {
         });
     }
 
+    public modificarNombreSucursal(nombreAnterior: string, nuevoNombre: string): void {
+        let sucursal = this.sucursales.find(sucursal => sucursal.getNombreSucursal().toUpperCase() == nombreAnterior.toUpperCase());
+    
+        if (sucursal) {
+            sucursal.modificarNombreSucursal(nuevoNombre);
+            console.log(`El nombre de la sucursal ${nombreAnterior} ha sido modificado a ${nuevoNombre}.`);
+        } else {
+            console.log(`La sucursal ${nombreAnterior} no se encuentra.`);
+        }
+    }
+    public modificarDireccionSucursal(nombre: string, nuevaDir: string): void {
+        let sucursal = this.sucursales.find(sucursal => sucursal.getNombreSucursal().toUpperCase() == nombre.toUpperCase());
+    
+        if (sucursal) {
+            sucursal.modificarDireccion(nuevaDir);
+            console.log(`La direccion de la sucursal ${nombre} ha sido modificada a ${nuevaDir}.`);
+        } else {
+            console.log(`La sucursal ${nombre} no se encuentra.`);
+        }
+    }
+
 }
