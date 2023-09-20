@@ -35,17 +35,25 @@ export class Sucursal {
     }
 
     public listarClientes(): void {
-        console.log("Listado de clientes:");
-        this.clientes.forEach(cliente => {
-            console.log(`N°: ${cliente.getId()} - Nombre: ${cliente.getNombre()} - Teléfono: ${cliente.getTelefono()}`);
-        });
+        if(this.clientes.length>0){
+            console.log("Listado de clientes:");
+            this.clientes.forEach(cliente => {
+                console.log(`N°: ${cliente.getId()} - Nombre: ${cliente.getNombre()} - Teléfono: ${cliente.getTelefono()}`);
+            });
+        }else{
+            console.log(`No hay clientes creados.`);            
+        }
     }
 
     public listarProveedores(): void {
-        console.log("Listado de proveedores:");
-        this.proveedores.forEach(proveedor => {
-            console.log(`N°: ${proveedor.getId()} - Nombre: ${proveedor.getNombre()} - Teléfono: ${proveedor.getTelefono()}`);
-        });
+        if(this.proveedores.length>0){
+            console.log("Listado de proveedores:");
+            this.proveedores.forEach(proveedor => {
+                console.log(`N°: ${proveedor.getId()} - Nombre: ${proveedor.getNombre()} - Teléfono: ${proveedor.getTelefono()}`);
+            });
+        }else{
+            console.log(`No hay proveedores creados.`);            
+        }
     }
 
     public nuevoCliente(nombre: string, tel: number): void {
@@ -56,7 +64,7 @@ export class Sucursal {
         }else{
             let id: number;
             do {
-                id = Math.floor(Math.random() * 10000);
+                id = Math.floor(Math.random() * 10000)+1;
             } while (this.clientes.find(cliente => cliente.getId() == id) != undefined);    
 
             let nuevoCliente = new Cliente(id, nombre, tel);
@@ -72,7 +80,7 @@ export class Sucursal {
         }else{
             let id: number;
             do {
-                id = Math.floor(Math.random() * 10000); 
+                id = Math.floor(Math.random() * 10000)+1; 
             } while (this.proveedores.find(proveedor => proveedor.getId() == id) != undefined);    
 
             let nuevoProveedor = new Proveedor(id, nombre, tel);
@@ -144,5 +152,25 @@ export class Sucursal {
         } else {
             console.log(`El proveedor ${nombre} no se encuentra en la sucursal.`);
         }
+    }
+
+    public seleccionarCliente(id:number):string{
+        let nombre:string="";
+        for(let i = 0; i < this.clientes.length;i++){
+            if(this.clientes[i].getId()==id){
+                nombre = this.clientes[i].getNombre();                
+            }
+        }
+        return nombre;
+    }
+
+    public seleccionarProveedor(id:number):string{
+        let nombre:string="";
+        for(let i = 0; i < this.proveedores.length;i++){
+            if(this.proveedores[i].getId()==id){
+                nombre = this.proveedores[i].getNombre();                
+            }
+        }
+        return nombre;
     }
 }

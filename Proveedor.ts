@@ -9,10 +9,14 @@ export class Proveedor extends Persona {
     }
 
     public listarProductos(): void{
-        console.log('Productos del proveedor:');
-        this.productos.forEach(producto => {
-            console.log(`${producto.getProducto()}`);
-        });
+        if(this.productos.length>0){
+            console.log("Productos del proveedor:");
+            this.productos.forEach(producto => {
+                console.log(`Nombre: ${producto.getProducto()}`);
+            });
+        }else{
+            console.log(`No hay productos creados.`);            
+        }
     }
 
     public setProducto(nombre:string): void{
