@@ -31,7 +31,7 @@ export class Veterinaria {
         }else{
             let id: number;
             do {
-                id = Math.floor(Math.random() * 100); 
+                id = Math.floor(Math.random() * 100)+1; 
             } while (this.sucursales.find(sucursal => sucursal.getIdSucursal() == id) != undefined);    
 
             let nuevaSucursal = new Sucursal(id, nombre,direccion);
@@ -76,4 +76,13 @@ export class Veterinaria {
         }
     }
 
+    public seleccionarSucursal(id:number):string{
+        let nombre:string="";
+        for(let i = 0; i < this.sucursales.length;i++){
+            if(this.sucursales[i].getIdSucursal()==id){
+                nombre = this.sucursales[i].getNombreSucursal();                
+            }
+        }
+        return nombre;
+    }
 }
