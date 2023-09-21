@@ -28,8 +28,13 @@ export class Cliente extends Persona{
     }
 
     public getMascotas():void{
-        for(let i = 0; i < this.mascotas.length;i++){
-            console.log(this.mascotas[i]);
+        if(this.mascotas.length>0){
+            console.log("Listado de mascotas:");
+            this.mascotas.forEach(mascota => {
+                console.log(`N°: ${mascota.getId()} - Nombre: ${mascota.getNombre()}`);
+            });
+        }else{
+            console.log(`No hay mascotas creados.`);            
         }
     }
 
@@ -46,6 +51,15 @@ export class Cliente extends Persona{
         this.vip += 1;
     }
 
+    public seleccionarPaciente(id:number):string{
+        let nombre:string="";
+        for(let i = 0; i < this.mascotas.length;i++){
+            if(this.mascotas[i].getId()==id){
+                nombre = this.mascotas[i].getNombre();                
+            }
+        }
+        return nombre;
+    }
     
 
 }

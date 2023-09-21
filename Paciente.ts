@@ -6,7 +6,7 @@ export class Paciente{
     private observacion?: string;
 
     public constructor(nombre:string,especie:string,idCliente:number,observacion?:string){
-        this.id = 0;
+        this.id = Math.floor(Math.random() * 10000)+1;
         this.nombre = nombre;
         this.especie = especie;
         this.idCliente = idCliente;
