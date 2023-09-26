@@ -44,4 +44,12 @@ export class Proveedor extends Persona {
             console.log('El proveedor no cuenta con el producto.');            
         }
     }
+
+    public returnProductos():string[]{
+        let arregloProducos:string[] = [];
+        for (let i = 0; i < this.productos.length; i++) {
+            arregloProducos.push(this.productos[i].getProducto());            
+        }
+        return arregloProducos;
+    }
 }
