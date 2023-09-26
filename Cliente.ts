@@ -31,7 +31,7 @@ export class Cliente extends Persona{
         if(this.mascotas.length>0){
             console.log("Listado de mascotas:");
             this.mascotas.forEach(mascota => {
-                console.log(`N°: ${mascota.getId()} - Nombre: ${mascota.getNombre()}`);
+                console.log(`N°: ${mascota.getId()} - Nombre: ${mascota.getNombre()} - Especie: ${mascota.getEspecie()} - Observación: ${mascota.getObservacion()}`);
             });
         }else{
             console.log(`No hay mascotas creados.`);            
@@ -60,6 +60,48 @@ export class Cliente extends Persona{
         }
         return nombre;
     }
+
+    public returnPaciente(nombre:string):Paciente{
+        for(let i = 0; i < this.mascotas.length;i++){
+            if(this.mascotas[i].getNombre().toUpperCase()==nombre.toUpperCase()){
+                return this.mascotas[i];                
+            }
+        }
+        return this.mascotas[0];
+    }
     
+    public modificarNombreMascota(nombreAnterior: string, nuevoNombre: string): void {
+        let mascota = this.mascotas.find(mascota => mascota.getNombre().toUpperCase() == nombreAnterior.toUpperCase());
+    
+        if (mascota) {
+            mascota.setNombre(nuevoNombre);
+            console.log(`El nombre de la mascota ${nombreAnterior} ha sido modificado a ${nuevoNombre}.`);
+        } else {
+            console.log(`La mascota ${nombreAnterior} no existe.`);
+        }
+    }
+    
+    public modificarEspecieMascota(nombre: string, nuevaEspecie: string): void {
+        let mascota = this.mascotas.find(mascota => mascota.getNombre().toUpperCase() == nombre.toUpperCase());
+    
+        if (mascota) {
+            mascota.setEspecie(nuevaEspecie);
+            console.log(`La especie de la mascota ${nombre} ha sido modificada a ${nuevaEspecie}.`);
+        } else {
+            console.log(`La mascota ${nombre} no existe.`);
+        }
+    }
+    
+    public modificarObservacionMascota(nombre: string, nuevaObs: string): void {
+        let mascota = this.mascotas.find(mascota => mascota.getNombre().toUpperCase() == nombre.toUpperCase());
+    
+        if (mascota) {
+            mascota.setObservacion(nuevaObs);
+            console.log(`La observación de la mascota ${nombre} ha sido modificada a ${nuevaObs}.`);
+        } else {
+            console.log(`La mascota ${nombre} no existe.`);
+        }
+    }
+
 
 }

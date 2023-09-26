@@ -85,4 +85,13 @@ export class Veterinaria {
         }
         return nombre;
     }
+
+    public returnSucursal(nombre:string):Sucursal{
+        for(let i = 0; i < this.sucursales.length;i++){
+            if(this.sucursales[i].getNombreSucursal().toUpperCase()==nombre.toUpperCase()){
+                return this.sucursales[i];                
+            }
+        }
+        return this.sucursales[0];
+    }
 }

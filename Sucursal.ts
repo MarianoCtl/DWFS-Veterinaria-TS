@@ -12,6 +12,8 @@ export class Sucursal {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
+        this.nuevoCliente("CONSUMIDOR FINAL", 0);
+        this.nuevoProveedor("STOCK INICIAL", 0);
     }
 
     public getIdSucursal(){
@@ -172,5 +174,44 @@ export class Sucursal {
             }
         }
         return nombre;
+    }
+
+    public returnCliente(nombre:string):Cliente{
+        for(let i = 0; i < this.clientes.length;i++){
+            if(this.clientes[i].getNombre().toUpperCase()==nombre.toUpperCase()){
+                return this.clientes[i];                
+            }
+        }
+        return this.clientes[0];
+    }
+
+    public returnProveedor(nombre:string):Proveedor{
+        for(let i = 0; i < this.proveedores.length;i++){
+            if(this.proveedores[i].getNombre().toUpperCase()==nombre.toUpperCase()){
+                return this.proveedores[i];                
+            }
+        }
+        return this.proveedores[0];
+    }
+
+    public venderProducto(nombre:string, cant:number):void{
+        let i=0;
+        let encontro:boolean=false;
+        while (i<this.proveedores.length && encontro==false) {
+            let proveedor:Proveedor = this.returnProveedor(this.proveedores[i].getNombre());
+            let productos = proveedor.returnProductos();            
+            let j=0;
+            while (j<productos.length && encontro==false) {
+                if(productos[j]== nombre.toUpperCase()){
+                    console.log(`Ha vendido ${cant} ${nombre} al cliente.`);    
+                    encontro=true;                
+                }     
+                j++;           
+            }
+            i++;
+        }
+        if(!encontro){
+            console.log(`El producto ${nombre} no se encuentra en stock.`);            
+        }
     }
 }
