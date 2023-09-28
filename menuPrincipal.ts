@@ -1,14 +1,10 @@
 import * as readLineSync from 'readline-sync';
 import { Veterinaria } from './Veterinaria';
+import * as funcionesExtras from './funcionesExtras';
 
-let nombreVeterinaria: string;
-do {
-    nombreVeterinaria = readLineSync.question('Ingrese el nombre de su veterinaria: ');
-} while (!nombreVeterinaria.trim());
-let direccionVeterinaria:string;
-do {
-    direccionVeterinaria = readLineSync.question('Ingrese la direccion de su veterinaria: ');
-} while (!direccionVeterinaria.trim());
+let nombreVeterinaria: string = funcionesExtras.validarTexto('Ingrese el nombre de su veterinaria: ');
+
+let direccionVeterinaria:string = funcionesExtras.validarTexto('Ingrese la direccion de su veterinaria: ');
 
 const centralVeterinaria = new Veterinaria(nombreVeterinaria, direccionVeterinaria);
 console.log(`\n------------`);
@@ -17,21 +13,17 @@ console.log(`Bienvenid@ a la central ${centralVeterinaria.getNombre()}!`);
 let finSucursales:boolean = false;
 //Agrega la central como una sucursal
 centralVeterinaria.nuevaSucursal(nombreVeterinaria,direccionVeterinaria);
-while(finSucursales==false){
+while(finSucursales==false){    
     console.log(`\n=========\nMENU CENTRAL\n=========\n`);    
     centralVeterinaria.listarSucursales();
     console.log(`0 - Crear sucursal \n-1 - Para finalizar`);    
     let opcionSucursal:number = readLineSync.questionInt('Ingrese el Numero de Sucursal o la opcion deseada: ');
     if(opcionSucursal == 0){
         //Crea sucursal
-        let nombreSucursal: string;
-        do {
-            nombreSucursal = readLineSync.question('Ingrese el nombre de la sucursal: ');
-        } while (!nombreSucursal.trim());
-        let direccionSucursal:string;
-        do {
-            direccionSucursal = readLineSync.question('Ingrese la direccion de la sucursal: ');
-        } while (!direccionSucursal.trim());
+        let nombreSucursal: string = funcionesExtras.validarTexto('Ingrese el nombre de la sucursal: ');
+        
+        let direccionSucursal:string = funcionesExtras.validarTexto('Ingrese la direccion de la sucursal: ');
+        
         //Crea la sucursal
         centralVeterinaria.nuevaSucursal(nombreSucursal,direccionSucursal);
     }else if(opcionSucursal==-1){
@@ -45,6 +37,7 @@ while(finSucursales==false){
             //Acciones dentro de la Sucursal seleccionada
             let finMenuSucursal:boolean=false;
             while (finMenuSucursal==false) {
+                console.log(`\nCentral/Sucursales`);                
                 console.log(`\n=========\nMENU SUCURSALES\n=========`);    
                 console.log(`\nOpciones:\n 1 - Modificar nombre sucursal\n 2 - Modificar dirección sucursal\n 3 - Eliminar sucursal\n 4 - Listar clientes\n 5 - Listar proveedores\n -1 - Volver al listado de sucursales.`);
                 let opcionMenuSucursal:number= readLineSync.questionInt('Ingrese el numero de la opcion: ');  
@@ -52,18 +45,14 @@ while(finSucursales==false){
                     //Opciones dentro de sucursal
                     switch (opcionMenuSucursal) {
                         case 1: //Modificar nombre sucursal
-                            let nuevoNombre: string;
-                            do {
-                                nuevoNombre = readLineSync.question('Ingrese el nuevo nombre de la sucursal: ');
-                            } while (!nuevoNombre.trim());
+                            let nuevoNombre: string = funcionesExtras.validarTexto('Ingrese el nuevo nombre de la sucursal: ');
+                            
                             centralVeterinaria.modificarNombreSucursal(nombreSucursal,nuevoNombre);
                             nombreSucursal=nuevoNombre;
                             break;
                         case 2: //Modificar dirección sucursal
-                            let nuevaDireccion: string;
-                            do {
-                                nuevaDireccion = readLineSync.question('Ingrese la nueva direccion: ');
-                            } while (!nuevaDireccion.trim());
+                            let nuevaDireccion: string = funcionesExtras.validarTexto('Ingrese la nueva direccion de la sucursal: ');
+                            
                             centralVeterinaria.modificarDireccionSucursal(nombreSucursal,nuevaDireccion);
                             break;
                         case 3: //Eliminar sucursal
@@ -84,6 +73,7 @@ while(finSucursales==false){
                             let finMenuCliente:boolean=false;
                             let sucursalSeleccionada = centralVeterinaria.returnSucursal(nombreSucursal);
                             while (finMenuCliente==false) {
+                                console.log(`\nCentral/Sucursales/Clientes`);
                                 console.log(`\n=========\nMENU CLIENTES\n=========`);    
                                 console.log(`\n------------`);
                                 sucursalSeleccionada.listarClientes();
@@ -91,10 +81,8 @@ while(finSucursales==false){
                                 let opcionClientes:number = readLineSync.questionInt('Ingrese el Numero de Cliente o la opcion deseada: ');
                                 if(opcionClientes == 0){
                                     //Crea el cliente
-                                    let nombreCliente: string;
-                                    do {
-                                        nombreCliente = readLineSync.question('Ingrese el nombre del cliente: ');
-                                    } while (!nombreCliente.trim());
+                                    let nombreCliente: string = funcionesExtras.validarTexto('Ingrese el nombre del cliente: ');
+                                    
                                     let telCliente = readLineSync.questionInt('Ingrese el telefono del cliente (solo numeros): ');
                                     sucursalSeleccionada.nuevoCliente(nombreCliente,telCliente);
                                 }else if(opcionClientes == -1){
@@ -116,6 +104,7 @@ while(finSucursales==false){
                                         //Menu interno del cliente
                                         let menuInternoCliente:boolean = false;
                                         while (menuInternoCliente == false) {
+                                            console.log(`\nCentral/Sucursales/Clientes/Cliente`);
                                             console.log(`\n=========\nMENU INTERNO CLIENTE\n=========`);    
                                             console.log(`\nOpciones:\n 1 - Modificar nombre cliente\n 2 - Modificar teléfono cliente\n 3 - Eliminar cliente\n 4 - Listar mascotas\n 5 - Agregar consulta\n 6 - Vender producto\n -1 - Volver al menú anterior`);
                                             let opcionMenuCliente:number= readLineSync.questionInt('Ingrese el numero de la opcion: ');  
@@ -123,10 +112,8 @@ while(finSucursales==false){
                                                 //Opciones dentro del cliente
                                                 switch (opcionMenuCliente) {
                                                     case 1: // Modificar nombre cliente
-                                                        let nuevoNombre: string;
-                                                        do {
-                                                            nuevoNombre = readLineSync.question('Ingrese el nuevo nombre del cliente: ');
-                                                        } while (!nuevoNombre.trim());
+                                                        let nuevoNombre: string = funcionesExtras.validarTexto('Ingrese el nuevo nombre del cliente: ');
+                                                        
                                                         sucursalSeleccionada.modificarNombreCliente(clienteSeleccionado.getNombre(),nuevoNombre);
                                                         nombreCliente=nuevoNombre;
                                                         break;
@@ -151,6 +138,7 @@ while(finSucursales==false){
                                                         //Acciones dentro del menú de mascotas
                                                         let finMenuMascota:boolean=false;
                                                         while (finMenuMascota==false) {
+                                                            console.log(`\nCentral/Sucursales/Clientes/Cliente/Mascotas`);
                                                             console.log(`\n=========\nMENU MASCOTAS\n=========`);    
                                                             console.log(`\n------------`);
                                                             clienteSeleccionado.getMascotas();
@@ -158,10 +146,8 @@ while(finSucursales==false){
                                                             let opcionMascotas:number = readLineSync.questionInt('Ingrese el Numero de la mascota o la opcion deseada: ');
                                                             if(opcionMascotas == 0){
                                                                 //Crear masctoca  nombre, especie, idcliente, obs?
-                                                                let nombreMascota: string;
-                                                                do {
-                                                                    nombreMascota = readLineSync.question('Ingrese el nombre de la mascota: ');
-                                                                } while (!nombreMascota.trim());
+                                                                let nombreMascota: string = funcionesExtras.validarTexto('Ingrese el nombre de la mascota: ');
+                                                                
                                                                 console.log(`Seleccione la opción de su especie:\n 1 - Perro\n 2 - Gato\n 3 - Exótica`);
                                                                 let opcionEspecie:number = readLineSync.questionInt('Ingrese la opcion: ');
                                                                 let especie:string;
@@ -191,6 +177,7 @@ while(finSucursales==false){
                                                                     //Menu interno de la mascota
                                                                     let menuInternoMascota:boolean = false;
                                                                     while (menuInternoMascota == false) {
+                                                                        console.log(`\nCentral/Sucursales/Clientes/Cliente/Mascotas/Mascota`);
                                                                         console.log(`\n=========\nMENU INTERNO MASCOTA\n=========`);    
                                                                         console.log(`\nOpciones:\n 1 - Modificar nombre mascota\n 2 - Modificar especie\n 3 - Modificar observación\n 4 - Eliminar mascota\n -1 - Volver al menú anterior`);
                                                                         let opcionMenuMascota:number= readLineSync.questionInt('Ingrese el numero de la opcion: ');  
@@ -198,10 +185,8 @@ while(finSucursales==false){
                                                                             //Opciones dentro de la mascota
                                                                             switch (opcionMenuMascota) {
                                                                                 case 1: // Modificar nombre mascota
-                                                                                    let nuevoNombre: string;
-                                                                                    do {
-                                                                                        nuevoNombre = readLineSync.question('Ingrese el nuevo nombre de la mascota: ');
-                                                                                    } while (!nuevoNombre.trim());
+                                                                                    let nuevoNombre: string = funcionesExtras.validarTexto('Ingrese el nuevo nombre de la mascota: ');
+                                                                                    
                                                                                     clienteSeleccionado.modificarNombreMascota(nombreMascota,nuevoNombre);
                                                                                     nombreMascota=nuevoNombre;
                                                                                     break;
@@ -259,11 +244,9 @@ while(finSucursales==false){
                                                         clienteSeleccionado.altaConsulta();
                                                         break;
                                                     case 6: // Vender producto
-                                                        let nombreVenderProducto: string;
-                                                        do {
-                                                            nombreVenderProducto = readLineSync.question('Ingrese el nombre del producto que desea vender: ');
-                                                        } while (!nombreVenderProducto.trim());
-                                                        let cantidadAVender:number=readLineSync.questionInt(`Ingrese la cantidad de ${nombreVenderProducto} que desea vender: `);
+                                                        let nombreVenderProducto: string = funcionesExtras.validarTexto('Ingrese el nombre del producto que desea vender: ');
+                                                        
+                                                        let cantidadAVender:number=readLineSync.questionInt(`Ingrese la cantidad de "${nombreVenderProducto}" que desea vender: `);
                                                         sucursalSeleccionada.venderProducto(nombreVenderProducto,cantidadAVender);
                                                         break;
                                                 }
@@ -287,6 +270,7 @@ while(finSucursales==false){
                             let finMenuProveedor:boolean=false;
                             let sucursalSeleccionadaProv = centralVeterinaria.returnSucursal(nombreSucursal);
                             while (finMenuProveedor==false) {
+                                console.log(`\nCentral/Sucursales/Proveedores`);
                                 console.log(`\n=========\nMENU PROVEEDORES\n=========`);    
                                 console.log(`\n------------`);
                                 sucursalSeleccionadaProv.listarProveedores();
@@ -294,10 +278,8 @@ while(finSucursales==false){
                                 let opcionProveedor:number = readLineSync.questionInt('Ingrese el Numero de Proveedor o la opcion deseada: ');
                                 if(opcionProveedor == 0){
                                     //Crea el proveedor
-                                    let nombreProveedor: string;
-                                    do {
-                                        nombreProveedor = readLineSync.question('Ingrese el nombre del proveedor: ');
-                                    } while (!nombreProveedor.trim());
+                                    let nombreProveedor: string = funcionesExtras.validarTexto('Ingrese el nombre del proveedor: ');
+                                    
                                     let telProveedor = readLineSync.questionInt('Ingrese el telefono del proveedor (solo numeros): ');
                                     sucursalSeleccionadaProv.nuevoProveedor(nombreProveedor,telProveedor);
                                 }else if(opcionProveedor == -1){
@@ -314,6 +296,7 @@ while(finSucursales==false){
                                         //Menu interno del proveedor
                                         let menuInternoProveedor:boolean = false;
                                         while (menuInternoProveedor == false) {
+                                            console.log(`\nCentral/Sucursales/Proveedores/Proveedor`);
                                             console.log(`\n=========\nMENU INTERNO PROVEEDOR\n=========`);    
                                             console.log(`\nOpciones:\n 1 - Modificar nombre proveedor\n 2 - Modificar teléfono proveedor\n 3 - Eliminar proveedor\n 4 - Listar productos\n -1 - Volver al menú anterior`);
                                             let opcionMenuProveedor:number= readLineSync.questionInt('Ingrese el numero de la opcion: ');  
@@ -321,10 +304,8 @@ while(finSucursales==false){
                                                 //Opciones dentro del proveedor
                                                 switch (opcionMenuProveedor) {
                                                     case 1: // Modificar nombre proveedor
-                                                        let nuevoNombre: string;
-                                                        do {
-                                                            nuevoNombre = readLineSync.question(`Ingrese el nuevo nombre del proveedor: `);
-                                                        } while (!nuevoNombre.trim());
+                                                        let nuevoNombre: string = funcionesExtras.validarTexto('Ingrese el nuevo nombre del proveedor: ');
+                                                        
                                                         sucursalSeleccionadaProv.modificarNombreProveedor(proveedorSeleccionado.getNombre(),nuevoNombre);
                                                         nombreProveedor=nuevoNombre;
                                                         break;
@@ -349,6 +330,7 @@ while(finSucursales==false){
                                                         //Acciones dentro del menú de productos
                                                         let finMenuProductosProv:boolean=false;
                                                         while (finMenuProductosProv==false) {
+                                                            console.log(`\nCentral/Sucursales/Proveedores/Proveedor/Productos`);
                                                             console.log(`\n=========\nMENU PRODUCTOS\n=========`);    
                                                             console.log(`\n------------`);
                                                             proveedorSeleccionado.listarProductos();
@@ -358,19 +340,14 @@ while(finSucursales==false){
                                                             switch (opcionProductos) {
                                                                 case 0:
                                                                     //Crear producto
-                                                                    let nombreProducto: string;
-                                                                    do {
-                                                                        nombreProducto = readLineSync.question('Ingrese el nombre del producto: ');
-                                                                    } while (!nombreProducto.trim());
+                                                                    let nombreProducto: string = funcionesExtras.validarTexto('Ingrese el nombre del producto: ');
+                                                                    
                                                                     proveedorSeleccionado.setProducto(nombreProducto);
                                                                     break;
                                                                 case 1:
                                                                     //Eliminar producto
-                                                                    let nombreEliminarProducto: string;
-                                                                    do {
-                                                                        nombreEliminarProducto = readLineSync.question('Ingrese el nombre del producto que desea eliminar: ');
-                                                                    } while (!nombreEliminarProducto.trim());
-
+                                                                    let nombreEliminarProducto: string = funcionesExtras.validarTexto('Ingrese el nombre del producto que desea eliminar: ');
+                                                                    
                                                                     let confirmacionEliminar:string;
                                                                     do {
                                                                         confirmacionEliminar = readLineSync.question(`Esta seguro que desea eliminar el producto ${nombreEliminarProducto}? [S/N]: `);
@@ -385,10 +362,8 @@ while(finSucursales==false){
                                                                     break;
                                                                 case 2:
                                                                     //Comprar producto
-                                                                    let nombreComprarProducto: string;
-                                                                    do {
-                                                                        nombreComprarProducto = readLineSync.question('Ingrese el nombre del producto que desea comprar: ');
-                                                                    } while (!nombreComprarProducto.trim());
+                                                                    let nombreComprarProducto: string = funcionesExtras.validarTexto('Ingrese el nombre del producto que desea comprar: ');
+                                                                    
                                                                     let cantidadAComprar:number=readLineSync.questionInt(`Ingrese la cantidad de ${nombreComprarProducto} que desea comprar: `);
                                                                     proveedorSeleccionado.comprarProducto(nombreComprarProducto,cantidadAComprar);
                                                                     break;
@@ -436,5 +411,7 @@ while(finSucursales==false){
 }
 console.log(`\n\n\n------------`);
 console.log(`Gracias por utilizar nuestro sistema.`);
+console.log(`Desarrollado por Mariano Catalá y Juan Pablo Wibaux`);
+
 
 
