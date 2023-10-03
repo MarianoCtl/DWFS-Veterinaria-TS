@@ -40,7 +40,4 @@ export class Paciente{
     public setObservacion(nuevaObservacion:string):void{
         this.observacion = nuevaObservacion;
     }
-
-
-
 }

@@ -90,69 +90,69 @@ export class Sucursal {
         }
     }
 
-    public eliminarCliente(nombre: string): void {
-        let indexCliente = this.clientes.findIndex(cliente => cliente.getNombre().toUpperCase() == nombre.toUpperCase());
+    public eliminarCliente(id: number): void {
+        let indexCliente = this.clientes.findIndex(cliente => cliente.getId() == id);
     
         if (indexCliente != -1) {
+            console.log(`El cliente ${this.clientes[indexCliente].getNombre()} ha sido eliminado de la sucursal.`);
             this.clientes.splice(indexCliente, 1);
-            console.log(`El cliente ${nombre} ha sido eliminado de la sucursal.`);
         } else {
-            console.log(`El cliente ${nombre} no se encuentra en la sucursal.`);
+            console.log(`El cliente ${id} no se encuentra en la sucursal.`);
         }
     }
 
-    public eliminarProveedor(nombre: string): void {
-        let indexProveedor = this.proveedores.findIndex(proveedor => proveedor.getNombre().toUpperCase() == nombre.toUpperCase());
+    public eliminarProveedor(id: number): void {
+        let indexProveedor = this.proveedores.findIndex(proveedor => proveedor.getId() == id);
     
         if (indexProveedor != -1) {
             this.proveedores.splice(indexProveedor, 1);
-            console.log(`El proveedor ${nombre} ha sido eliminado de la sucursal.`);
+            console.log(`El proveedor ${this.proveedores[indexProveedor].getNombre()} ha sido eliminado de la sucursal.`);
         } else {
-            console.log(`El proveedor ${nombre} no se encuentra en la sucursal.`);
+            console.log(`El proveedor ${id} no se encuentra en la sucursal.`);
         }
     }
 
-    public modificarNombreCliente(nombreAnterior: string, nuevoNombre: string): void {
-        let cliente = this.clientes.find(cliente => cliente.getNombre().toUpperCase() == nombreAnterior.toUpperCase());
+    public modificarNombreCliente(id: number, nuevoNombre: string): void {
+        let cliente = this.clientes.find(cliente => cliente.getId() == id);
     
         if (cliente) {
+            console.log(`El nombre del cliente ${cliente.getNombre()} ha sido modificado a ${nuevoNombre}.`);
             cliente.setNombre(nuevoNombre);
-            console.log(`El nombre del cliente ${nombreAnterior} ha sido modificado a ${nuevoNombre}.`);
         } else {
-            console.log(`El cliente ${nombreAnterior} no se encuentra en la sucursal.`);
+            console.log(`El cliente ${id} no se encuentra en la sucursal.`);
         }
     }
 
-    public modificarNombreProveedor(nombreAnterior: string, nuevoNombre: string): void {
-        let proveedor = this.proveedores.find(proveedor => proveedor.getNombre().toUpperCase() == nombreAnterior.toUpperCase());
+    public modificarNombreProveedor(id: number, nuevoNombre: string): void {
+        let proveedor = this.proveedores.find(proveedor => proveedor.getId() == id);
     
         if (proveedor) {
+            console.log(`El nombre del proveedor ${proveedor.getNombre()} ha sido modificado a ${nuevoNombre}.`);
             proveedor.setNombre(nuevoNombre);
-            console.log(`El nombre del proveedor ${nombreAnterior} ha sido modificado a ${nuevoNombre}.`);
         } else {
-            console.log(`El proveedor ${nombreAnterior} no se encuentra en la sucursal.`);
+            console.log(`El proveedor ${id} no se encuentra en la sucursal.`);
         }
     }
 
-    public modificarTelefonoCliente(nombre: string, nuevoTel: number): void {
-        let cliente = this.clientes.find(cliente => cliente.getNombre().toUpperCase() == nombre.toUpperCase());
+    public modificarTelefonoCliente(id: number, nuevoTel: number): void {
+        let cliente = this.clientes.find(cliente => cliente.getId() == id);
     
         if (cliente) {
             cliente.setTelefono(nuevoTel);
-            console.log(`El teléfono del cliente ${nombre} ha sido modificado a ${nuevoTel}.`);
+            console.log(`El teléfono del cliente ${cliente.getNombre()} ha sido modificado a ${nuevoTel}.`);
         } else {
-            console.log(`El cliente ${nombre} no se encuentra en la sucursal.`);
+            console.log(`El cliente ${id} no se encuentra en la sucursal.`);
         }
     }
 
-    public modificarTelefonoProveedor(nombre: string, nuevoTel: number): void {
-        let proveedor = this.proveedores.find(proveedor => proveedor.getNombre().toUpperCase() == nombre.toUpperCase());
+    public modificarTelefonoProveedor(id: number, nuevoTel: number): void {
+        let proveedor = this.proveedores.find(proveedor => proveedor.getId() == id);
     
         if (proveedor) {
             proveedor.setTelefono(nuevoTel);
-            console.log(`El teléfono del proveedor ${nombre} ha sido modificado a ${nuevoTel}.`);
+            console.log(`El teléfono del proveedor ${proveedor.getNombre()} ha sido modificado a ${nuevoTel}.`);
         } else {
-            console.log(`El proveedor ${nombre} no se encuentra en la sucursal.`);
+            console.log(`El proveedor ${id} no se encuentra en la sucursal.`);
         }
     }
 
@@ -176,18 +176,18 @@ export class Sucursal {
         return nombre;
     }
 
-    public returnCliente(nombre:string):Cliente{
+    public returnCliente(id:number):Cliente{
         for(let i = 0; i < this.clientes.length;i++){
-            if(this.clientes[i].getNombre().toUpperCase()==nombre.toUpperCase()){
+            if(this.clientes[i].getId()==id){
                 return this.clientes[i];                
             }
         }
         return this.clientes[0];
     }
 
-    public returnProveedor(nombre:string):Proveedor{
+    public returnProveedor(id:number):Proveedor{
         for(let i = 0; i < this.proveedores.length;i++){
-            if(this.proveedores[i].getNombre().toUpperCase()==nombre.toUpperCase()){
+            if(this.proveedores[i].getId()==id){
                 return this.proveedores[i];                
             }
         }
@@ -198,7 +198,7 @@ export class Sucursal {
         let i=0;
         let encontro:boolean=false;
         while (i<this.proveedores.length && encontro==false) {
-            let proveedor:Proveedor = this.returnProveedor(this.proveedores[i].getNombre());
+            let proveedor:Proveedor = this.returnProveedor(this.proveedores[i].getId());
             let productos = proveedor.returnProductos();            
             let j=0;
             while (j<productos.length && encontro==false) {
