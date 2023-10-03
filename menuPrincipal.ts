@@ -32,6 +32,7 @@ while(finSucursales==false){
         //Busca la sucursal
         let nombreSucursal:string = centralVeterinaria.seleccionarSucursal(opcionSucursal);
         if(nombreSucursal!=""){
+            let idSucursal = opcionSucursal;
             console.log(`\n------------`);
             console.log(`Bienvenid@ a la sucursal ${nombreSucursal}.`);
             //Acciones dentro de la Sucursal seleccionada
@@ -47,13 +48,13 @@ while(finSucursales==false){
                         case 1: //Modificar nombre sucursal
                             let nuevoNombre: string = funcionesExtras.validarTexto('Ingrese el nuevo nombre de la sucursal: ');
                             
-                            centralVeterinaria.modificarNombreSucursal(nombreSucursal,nuevoNombre);
+                            centralVeterinaria.modificarNombreSucursal(idSucursal,nuevoNombre);
                             nombreSucursal=nuevoNombre;
                             break;
                         case 2: //Modificar dirección sucursal
                             let nuevaDireccion: string = funcionesExtras.validarTexto('Ingrese la nueva direccion de la sucursal: ');
                             
-                            centralVeterinaria.modificarDireccionSucursal(nombreSucursal,nuevaDireccion);
+                            centralVeterinaria.modificarDireccionSucursal(idSucursal,nuevaDireccion);
                             break;
                         case 3: //Eliminar sucursal
                             let confirmacionEliminar:string;
@@ -62,7 +63,7 @@ while(finSucursales==false){
                             } while (confirmacionEliminar.toUpperCase()!="S" && confirmacionEliminar.toUpperCase()!="N");
                             if(confirmacionEliminar.toUpperCase()=="S"){
                                 //elimina la sucursal
-                                centralVeterinaria.eliminarSucursal(nombreSucursal);
+                                centralVeterinaria.eliminarSucursal(idSucursal);
                                 finMenuSucursal = true;
                             }else{
                                 console.log(`Ha cancelado la eliminación de la sucursal.`);                                
@@ -71,7 +72,7 @@ while(finSucursales==false){
                         case 4: //Listar clientes
                             //Acciones dentro del menú de clientes
                             let finMenuCliente:boolean=false;
-                            let sucursalSeleccionada = centralVeterinaria.returnSucursal(nombreSucursal);
+                            let sucursalSeleccionada = centralVeterinaria.returnSucursal(idSucursal);
                             while (finMenuCliente==false) {
                                 console.log(`\nCentral/Sucursales/Clientes`);
                                 console.log(`\n=========\nMENU CLIENTES\n=========`);    
@@ -93,7 +94,8 @@ while(finSucursales==false){
                                     let nombreCliente: string = sucursalSeleccionada.seleccionarCliente(opcionClientes);
                                     if(nombreCliente!=""){
                                         //Encontró el cliente
-                                        let clienteSeleccionado = sucursalSeleccionada.returnCliente(nombreCliente);
+                                        let idCliente =opcionClientes;
+                                        let clienteSeleccionado = sucursalSeleccionada.returnCliente(idCliente);
                                         let esVip:string;
                                         if(clienteSeleccionado.getVip()>=5){
                                             esVip = "VIP";
@@ -114,12 +116,12 @@ while(finSucursales==false){
                                                     case 1: // Modificar nombre cliente
                                                         let nuevoNombre: string = funcionesExtras.validarTexto('Ingrese el nuevo nombre del cliente: ');
                                                         
-                                                        sucursalSeleccionada.modificarNombreCliente(clienteSeleccionado.getNombre(),nuevoNombre);
+                                                        sucursalSeleccionada.modificarNombreCliente(idCliente,nuevoNombre);
                                                         nombreCliente=nuevoNombre;
                                                         break;
                                                     case 2: // Modificar tel cliente
                                                         let nuevoTel:number = readLineSync.questionInt(`Ingrese el nuevo telefono (solo numeros): `);
-                                                        sucursalSeleccionada.modificarTelefonoCliente(clienteSeleccionado.getNombre(),nuevoTel);
+                                                        sucursalSeleccionada.modificarTelefonoCliente(idCliente,nuevoTel);
                                                         break;
                                                     case 3: // Eliminar cliente
                                                         let confirmacionEliminar:string;
@@ -128,7 +130,7 @@ while(finSucursales==false){
                                                         } while (confirmacionEliminar.toUpperCase()!="S" && confirmacionEliminar.toUpperCase()!="N");
                                                         if(confirmacionEliminar.toUpperCase()=="S"){
                                                             //elimina el cliente
-                                                            sucursalSeleccionada.eliminarCliente(nombreCliente);
+                                                            sucursalSeleccionada.eliminarCliente(idCliente);
                                                             menuInternoCliente = true;
                                                         }else{
                                                             console.log(`Ha cancelado la eliminación del cliente.`);                                
@@ -173,6 +175,7 @@ while(finSucursales==false){
                                                                 if(nombreMascota!=""){
                                                                     //Encontró la mascota
                                                                     let mascotaSeleccionada = clienteSeleccionado.returnPaciente(nombreMascota);
+                                                                    let idMascota = mascotaSeleccionada.getId();
                                                                     console.log(`\n${mascotaSeleccionada.getNombre()} - Especie: ${mascotaSeleccionada.getEspecie()} - Observación: ${mascotaSeleccionada.getObservacion()}`);  
                                                                     //Menu interno de la mascota
                                                                     let menuInternoMascota:boolean = false;
@@ -187,7 +190,7 @@ while(finSucursales==false){
                                                                                 case 1: // Modificar nombre mascota
                                                                                     let nuevoNombre: string = funcionesExtras.validarTexto('Ingrese el nuevo nombre de la mascota: ');
                                                                                     
-                                                                                    clienteSeleccionado.modificarNombreMascota(nombreMascota,nuevoNombre);
+                                                                                    clienteSeleccionado.modificarNombreMascota(idMascota,nuevoNombre);
                                                                                     nombreMascota=nuevoNombre;
                                                                                     break;
                                                                                 case 2: // Modificar especie
@@ -205,11 +208,11 @@ while(finSucursales==false){
                                                                                             nuevaEspecie="Exótica"
                                                                                             break;
                                                                                     }
-                                                                                    clienteSeleccionado.modificarEspecieMascota(nombreMascota,nuevaEspecie);
+                                                                                    clienteSeleccionado.modificarEspecieMascota(idMascota,nuevaEspecie);
                                                                                     break;
                                                                                 case 3: // Modificar observacion
                                                                                     let nuevaObs:string = readLineSync.question(`Ingrese la nueva observacion: `);
-                                                                                    clienteSeleccionado.modificarObservacionMascota(nombreMascota,nuevaObs);
+                                                                                    clienteSeleccionado.modificarObservacionMascota(idMascota,nuevaObs);
                                                                                     break;
                                                                                 case 4: // Eliminar mascota
                                                                                     let confirmacionEliminar:string;
@@ -218,7 +221,7 @@ while(finSucursales==false){
                                                                                     } while (confirmacionEliminar.toUpperCase()!="S" && confirmacionEliminar.toUpperCase()!="N");
                                                                                     if(confirmacionEliminar.toUpperCase()=="S"){
                                                                                         //elimina la mascota
-                                                                                        clienteSeleccionado.eliminarMascota(nombreMascota);
+                                                                                        clienteSeleccionado.eliminarMascotaDeCliente(idMascota);
                                                                                         menuInternoMascota = true;
                                                                                     }else{
                                                                                         console.log(`Ha cancelado la eliminación de la mascota.`);                                
@@ -268,7 +271,7 @@ while(finSucursales==false){
                         case 5: //Listar proveedores
                             //Acciones dentro del menú de proveedores
                             let finMenuProveedor:boolean=false;
-                            let sucursalSeleccionadaProv = centralVeterinaria.returnSucursal(nombreSucursal);
+                            let sucursalSeleccionadaProv = centralVeterinaria.returnSucursal(idSucursal);
                             while (finMenuProveedor==false) {
                                 console.log(`\nCentral/Sucursales/Proveedores`);
                                 console.log(`\n=========\nMENU PROVEEDORES\n=========`);    
@@ -287,10 +290,11 @@ while(finSucursales==false){
                                     finMenuProveedor=true;
                                 }else{
                                     //selecciona el proveedor
-                                    let nombreProveedor: string = sucursalSeleccionadaProv.seleccionarProveedor(opcionProveedor);
+                                    let idProveedor = opcionProveedor;
+                                    let nombreProveedor: string = sucursalSeleccionadaProv.seleccionarProveedor(idProveedor);
                                     if(nombreProveedor!=""){
                                         //Encontró el proveedor
-                                        let proveedorSeleccionado = sucursalSeleccionadaProv.returnProveedor(nombreProveedor);
+                                        let proveedorSeleccionado = sucursalSeleccionadaProv.returnProveedor(idProveedor);
                                         
                                         console.log(`\n${proveedorSeleccionado.getNombre()} - Tel: ${proveedorSeleccionado.getTelefono()}`);  
                                         //Menu interno del proveedor
@@ -306,12 +310,12 @@ while(finSucursales==false){
                                                     case 1: // Modificar nombre proveedor
                                                         let nuevoNombre: string = funcionesExtras.validarTexto('Ingrese el nuevo nombre del proveedor: ');
                                                         
-                                                        sucursalSeleccionadaProv.modificarNombreProveedor(proveedorSeleccionado.getNombre(),nuevoNombre);
+                                                        sucursalSeleccionadaProv.modificarNombreProveedor(idProveedor,nuevoNombre);
                                                         nombreProveedor=nuevoNombre;
                                                         break;
                                                     case 2: // Modificar tel proveedor
                                                         let nuevoTel:number = readLineSync.questionInt(`Ingrese el nuevo telefono (solo numeros): `);
-                                                        sucursalSeleccionadaProv.modificarTelefonoProveedor(proveedorSeleccionado.getNombre(),nuevoTel);
+                                                        sucursalSeleccionadaProv.modificarTelefonoProveedor(idProveedor,nuevoTel);
                                                         break;
                                                     case 3: // Eliminar proveedor
                                                         let confirmacionEliminar:string;
@@ -320,7 +324,7 @@ while(finSucursales==false){
                                                         } while (confirmacionEliminar.toUpperCase()!="S" && confirmacionEliminar.toUpperCase()!="N");
                                                         if(confirmacionEliminar.toUpperCase()=="S"){
                                                             //Elimina el proveedor
-                                                            sucursalSeleccionadaProv.eliminarProveedor(nombreProveedor);
+                                                            sucursalSeleccionadaProv.eliminarProveedor(idProveedor);
                                                             menuInternoProveedor = true;
                                                         }else{
                                                             console.log(`Ha cancelado la eliminación del proveedor.`);                                
