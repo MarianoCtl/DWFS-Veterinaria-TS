@@ -25,18 +25,13 @@ export class Veterinaria {
     }
 
     public nuevaSucursal(nombre:string, direccion:string):void{
-        let sucursalExistente = this.sucursales.find(sucursal=>sucursal.getNombreSucursal().toUpperCase()==nombre.toUpperCase());
-        if(sucursalExistente){
-            console.log(`La Sucursal ${nombre} ya existe.`);        
-        }else{
-            let id: number;
-            do {
-                id = Math.floor(Math.random() * 100)+1; 
-            } while (this.sucursales.find(sucursal => sucursal.getIdSucursal() == id) != undefined);    
+        let id: number;
+        do {
+            id = Math.floor(Math.random() * 100)+1; 
+        } while (this.sucursales.find(sucursal => sucursal.getIdSucursal() == id) != undefined);    
 
-            let nuevaSucursal = new Sucursal(id, nombre,direccion);
-            this.sucursales.push(nuevaSucursal);
-        }
+        let nuevaSucursal = new Sucursal(id, nombre,direccion);
+        this.sucursales.push(nuevaSucursal);
     }
     public eliminarSucursal(id: number): void {
         let indexSucursal = this.sucursales.findIndex(sucursal => sucursal.getIdSucursal() == id);

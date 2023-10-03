@@ -59,35 +59,23 @@ export class Sucursal {
     }
 
     public nuevoCliente(nombre: string, tel: number): void {
-        let clienteExistente = this.clientes.find(cliente => cliente.getNombre().toUpperCase() == nombre.toUpperCase());
+        let id: number;
+        do {
+            id = Math.floor(Math.random() * 10000)+1;
+        } while (this.clientes.find(cliente => cliente.getId() == id) != undefined);    
 
-        if(clienteExistente){
-            console.log(`El cliente ${nombre} ya existe.`);        
-        }else{
-            let id: number;
-            do {
-                id = Math.floor(Math.random() * 10000)+1;
-            } while (this.clientes.find(cliente => cliente.getId() == id) != undefined);    
-
-            let nuevoCliente = new Cliente(id, nombre, tel);
-            this.clientes.push(nuevoCliente);
-        }
+        let nuevoCliente = new Cliente(id, nombre, tel);
+        this.clientes.push(nuevoCliente);
     }
 
     public nuevoProveedor(nombre: string, tel: number): void {
-        let proveedorExistente = this.proveedores.find(proveedor => proveedor.getNombre().toUpperCase() == nombre.toUpperCase());
+        let id: number;
+        do {
+            id = Math.floor(Math.random() * 10000)+1; 
+        } while (this.proveedores.find(proveedor => proveedor.getId() == id) != undefined);    
 
-        if(proveedorExistente){
-            console.log(`El proveedor ${nombre} ya existe.`);        
-        }else{
-            let id: number;
-            do {
-                id = Math.floor(Math.random() * 10000)+1; 
-            } while (this.proveedores.find(proveedor => proveedor.getId() == id) != undefined);    
-
-            let nuevoProveedor = new Proveedor(id, nombre, tel);
-            this.proveedores.push(nuevoProveedor);
-        }
+        let nuevoProveedor = new Proveedor(id, nombre, tel);
+        this.proveedores.push(nuevoProveedor);
     }
 
     public eliminarCliente(id: number): void {

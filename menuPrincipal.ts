@@ -174,8 +174,8 @@ while(finSucursales==false){
                                                                 let nombreMascota: string = clienteSeleccionado.seleccionarPaciente(opcionMascotas);
                                                                 if(nombreMascota!=""){
                                                                     //Encontró la mascota
-                                                                    let mascotaSeleccionada = clienteSeleccionado.returnPaciente(nombreMascota);
-                                                                    let idMascota = mascotaSeleccionada.getId();
+                                                                    let idMascota = opcionMascotas;
+                                                                    let mascotaSeleccionada = clienteSeleccionado.returnPaciente(idMascota);
                                                                     console.log(`\n${mascotaSeleccionada.getNombre()} - Especie: ${mascotaSeleccionada.getEspecie()} - Observación: ${mascotaSeleccionada.getObservacion()}`);  
                                                                     //Menu interno de la mascota
                                                                     let menuInternoMascota:boolean = false;

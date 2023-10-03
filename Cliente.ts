@@ -57,9 +57,9 @@ export class Cliente extends Persona{
         return nombre;
     }
 
-    public returnPaciente(nombre:string):Paciente{
+    public returnPaciente(id:number):Paciente{
         for(let i = 0; i < this.mascotas.length;i++){
-            if(this.mascotas[i].getNombre().toUpperCase()==nombre.toUpperCase()){
+            if(this.mascotas[i].getId()==id){
                 return this.mascotas[i];                
             }
         }
